@@ -7,6 +7,12 @@ processed = "Processed"
 
 types = ["invoice", "resume", "contract"]
 
+def get_doc_type(content):
+    for line in content.splitlines():
+            if "Document Type: " in line:
+                doc_type = line.split("Document Type:")
+                return doc_type[1]
+
 for file in os.listdir(DIRECTORY):
     if file != processed:
         print("Current File: " + file)
@@ -16,7 +22,7 @@ for file in os.listdir(DIRECTORY):
         try:
             read_file = open(file_dir, "r")
         except:
-            print("File/Folder is not Obtainable: " + file)
+            print("File/Folder is not Readable: " + file)
 
         # read file
         contents = read_file.read()
@@ -28,9 +34,6 @@ for file in os.listdir(DIRECTORY):
                     os.makedirs(processed_dir)
 
                 # Get our Document type
-                for line in contents.splitlines():
-                    if "Document Type: " in line:
-                        doc_type = line.split("Document Type:")
-                        print(doc_type[1])
+                doc_type = get_doc_type(contents)
+                
                     
-            
