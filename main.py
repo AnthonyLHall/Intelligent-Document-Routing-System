@@ -27,8 +27,10 @@ for file in os.listdir(DIRECTORY):
                 if not os.path.exists(processed_dir):
                     os.makedirs(processed_dir)
 
-                
-                
-                print(file_type)
-
+                # Get our Document type
+                for line in contents.splitlines():
+                    if "Document Type: " in line:
+                        doc_type = line.split("Document Type:")
+                        print(doc_type[1])
+                    
             
