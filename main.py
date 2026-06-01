@@ -11,14 +11,6 @@ resume_field = {}
 contract_field = {}
 
 def get_invoice_data(content):
-
-    global vendor
-    global doc_type
-    global invoice_num
-    global date
-    global amount
-    global status
-
     vendor = None
     doc_type = None
     invoice_num = None
@@ -27,27 +19,38 @@ def get_invoice_data(content):
     status = None
 
     for line in content.splitlines():
-        if "Document Type:".lower() in line.lower():
+        if "document type:" in line.lower():
             doc_type_split = line.split("Document Type:")
             doc_type = doc_type_split[1]            
-        if "Vendor:".lower() in line.lower():
+        if "vendor:" in line.lower():
             vendor_split = line.split("Vendor:")
             vendor = vendor_split[1]
-        if "invoice number:".lower() in line.lower():
+        if "invoice number:" in line.lower():
             invoice_num_split = line.split("Invoice Number:")
             invoice_num = invoice_num_split[1]
-        if "date:".lower() in line.lower():
+        if "date:" in line.lower():
             date_split = line.split("Date:")
             date = date_split[1]
-        if "amount:".lower() in line.lower():
+        if "amount:" in line.lower():
             amount_split = line.split()
             amount = amount_split[1]
-        if "status".lower() in line.lower():
+        if "status" in line.lower():
             status_split = line.split()
             status = status_split[1]
             
     return doc_type, vendor, invoice_num, date, amount, status
             
+def get_contract_data(content):
+    doc_type = None
+    contract_id = None
+    client = None
+    start_date = None
+    end_date = None
+    status = None
+
+    for line in content.splitlines():
+        if "document type:".lower() in line.lower():
+            pass
 
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
@@ -76,5 +79,12 @@ for file in os.listdir(DIRECTORY):
             invoice_field["date"] = date
             invoice_field["amount"] = amount
             invoice_field["status"] = status
+            print("file dropped is invoice")
+        
+        if "contract" in contents.lower():
+            
+            print("file dropped is contract")
+        
+
 
 print(invoice_field)
