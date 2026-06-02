@@ -49,8 +49,27 @@ def get_contract_data(content):
     status = None
 
     for line in content.splitlines():
-        if "document type:".lower() in line.lower():
-            pass
+        if "document type:" in line.lower():
+            doc_type_split = line.split("Document Type:")
+            doc_type = doc_type_split[1]
+        if "contract id:" in line.lower():
+            contract_id_split = line.split("Contract ID:")
+            contract_id = contract_id_split[1]
+        if "client:" in line.lower():
+            client_split = line.split("Client:")
+            client = client_split[1]
+        if "start date" in line.lower():
+            start_date_split = line.split("Start Date:")
+            start_date = start_date_split[1]
+        if "end date" in line.lower():
+            end_date_split = line.split("End Date:")
+            end_date = end_date_split[1]
+        if "status" in line.lower():
+            status_split = line.split("Status:")
+            status = status_split[1]
+
+
+    return doc_type, contract_id, client, start_date, end_date, status
 
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
@@ -82,9 +101,7 @@ for file in os.listdir(DIRECTORY):
             print("file dropped is invoice")
         
         if "contract" in contents.lower():
-            
+            doc_type, contract_id, client, start_date, end_date, status = get_contract_data(contents)
+            print(contract_id)
             print("file dropped is contract")
         
-
-
-print(invoice_field)
