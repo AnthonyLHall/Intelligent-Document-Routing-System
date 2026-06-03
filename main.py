@@ -92,7 +92,7 @@ for file in os.listdir(DIRECTORY):
             
         if "invoice" in contents.lower():
             doc_type, vendor, invoice_num, date, amount, status = get_invoice_data(contents)
-            invoice_field["document type"] = doc_type
+            invoice_field["document_type"] = doc_type
             invoice_field["vendor"] = vendor
             invoice_field["invoice_number"] = invoice_num
             invoice_field["date"] = date
@@ -102,6 +102,13 @@ for file in os.listdir(DIRECTORY):
         
         if "contract" in contents.lower():
             doc_type, contract_id, client, start_date, end_date, status = get_contract_data(contents)
-            print(contract_id)
+            contract_field["document_type"] = doc_type
+            contract_field["contract_id"] = contract_id
+            contract_field["client"] = client
+            contract_field["start_date"] = start_date
+            contract_field["end_date"] = end_date
+            contract_field["status"] = status
             print("file dropped is contract")
         
+
+print(contract_field)
