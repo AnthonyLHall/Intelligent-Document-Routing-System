@@ -71,6 +71,19 @@ def get_contract_data(content):
 
     return doc_type, contract_id, client, start_date, end_date, status
 
+def get_resume_data(content):
+    doc_type = None
+    name = None
+    email = None
+    phone_no = None
+    Skills = None
+    Experience = None
+
+    for line in contents.splitlines():
+        if "document type:" in line.lower():
+            doc_type_split = line.split("Document Type:")
+            doc_type = doc_type_split[1]
+
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
     os.makedirs(processed_dir)
@@ -110,5 +123,8 @@ for file in os.listdir(DIRECTORY):
             contract_field["status"] = status
             print("file dropped is contract")
         
+        if "resume" in contents.lower():
+            pass
+
 
 print(contract_field)
