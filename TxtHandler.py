@@ -39,7 +39,7 @@ def get_invoice_data(content):
             status = status_split[1]
             
     return doc_type, vendor, invoice_num, date, amount, status
-            
+
 def get_contract_data(content):
     doc_type = None
     contract_id = None
@@ -76,8 +76,8 @@ def get_resume_data(content):
     name = None
     email = None
     phone_no = None
-    Skills = None
-    Experience = None
+    skills = None
+    experience = None
 
     for line in contents.splitlines():
         if "document type:" in line.lower():
@@ -91,6 +91,17 @@ def get_resume_data(content):
         if "email" in line.lower():
             email_split = line.split("Email:")
             email = email_split[1]
+
+        if "phone" in line.lower():
+            phone_split = line.split("Phone:")
+            phone_no = phone_split[1]
+
+        if "experience" in line.lower():
+            pass
+
+        if "skills" in line.lower():
+            pass
+
 
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
@@ -119,7 +130,7 @@ for file in os.listdir(DIRECTORY):
             invoice_field["date"] = date
             invoice_field["amount"] = amount
             invoice_field["status"] = status
-            print("file dropped is invoice")
+            
         
         if "contract" in contents.lower():
             doc_type, contract_id, client, start_date, end_date, status = get_contract_data(contents)
@@ -129,10 +140,8 @@ for file in os.listdir(DIRECTORY):
             contract_field["start_date"] = start_date
             contract_field["end_date"] = end_date
             contract_field["status"] = status
-            print("file dropped is contract")
+            
         
         if "resume" in contents.lower():
             pass
 
-
-print(contract_field)
