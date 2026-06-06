@@ -106,12 +106,17 @@ def get_resume_data(content):
         if "experience" in line.lower():
             pass
 
-    for line in contents.splitlines():
-        iter = 0
+    for index, line in enumerate(contents.splitlines()):
+        
         if "skills" in line.lower():
-            print(line)
+            lines.append(index)
             
+        if "experience" in line.lower():
+            lines.append(index)
 
+    all_lines = contents.splitlines()
+    skills = [s.strip() for s in all_lines[lines[0] + 1 : lines[1]] if s.strip()]
+    return skills
 
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
@@ -150,7 +155,7 @@ for file in os.listdir(DIRECTORY):
             contract_field["start_date"] = start_date
             contract_field["end_date"] = end_date
             contract_field["status"] = status
-            
+        
         
         if "resume" in contents.lower():
             lines = get_resume_data(contents)
