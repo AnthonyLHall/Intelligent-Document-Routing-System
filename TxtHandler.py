@@ -2,6 +2,7 @@ import os
 import shutil
 
 # Processed File Directory
+
 DIRECTORY = r"C:\Users\antde\OneDrive\Desktop\Intelligent-Document-Routing"
 processed = "Processed"
 
@@ -21,22 +22,22 @@ def get_invoice_data(content):
     for line in content.splitlines():
         if "document type:" in line.lower():
             doc_type_split = line.split("Document Type:")
-            doc_type = doc_type_split[1]            
+            doc_type = doc_type_split[1].replace(" ", "")            
         if "vendor:" in line.lower():
             vendor_split = line.split("Vendor:")
-            vendor = vendor_split[1]
+            vendor = vendor_split[1].replace(" ", "")
         if "invoice number:" in line.lower():
             invoice_num_split = line.split("Invoice Number:")
-            invoice_num = invoice_num_split[1]
+            invoice_num = invoice_num_split[1].replace(" ", "")
         if "date:" in line.lower():
             date_split = line.split("Date:")
-            date = date_split[1]
+            date = date_split[1].replace(" ", "")
         if "amount:" in line.lower():
             amount_split = line.split()
-            amount = amount_split[1]
+            amount = amount_split[1].replace(" ", "")
         if "status" in line.lower():
             status_split = line.split()
-            status = status_split[1]
+            status = status_split[1].replace(" ", "")
             
     return doc_type, vendor, invoice_num, date, amount, status
 
@@ -51,27 +52,32 @@ def get_contract_data(content):
     for line in content.splitlines():
         if "document type:" in line.lower():
             doc_type_split = line.split("Document Type:")
-            doc_type = doc_type_split[1]
+            doc_type = doc_type_split[1].replace(" ", "")
         if "contract id:" in line.lower():
             contract_id_split = line.split("Contract ID:")
-            contract_id = contract_id_split[1]
+            contract_id = contract_id_split[1].replace(" ", "")
         if "client:" in line.lower():
             client_split = line.split("Client:")
-            client = client_split[1]
+            client = client_split[1].replace(" ", "")
         if "start date" in line.lower():
             start_date_split = line.split("Start Date:")
-            start_date = start_date_split[1]
+            start_date = start_date_split[1].replace(" ", "")
         if "end date" in line.lower():
             end_date_split = line.split("End Date:")
-            end_date = end_date_split[1]
+            end_date = end_date_split[1].replace(" ", "")
         if "status" in line.lower():
             status_split = line.split("Status:")
-            status = status_split[1]
+            status = status_split[1].replace(" ", "")
 
 
     return doc_type, contract_id, client, start_date, end_date, status
 
 def get_resume_data(content):
+    
+    iter = 0
+    lines = []
+    line_numbers = [6, 9]
+
     doc_type = None
     name = None
     email = None
@@ -80,27 +86,31 @@ def get_resume_data(content):
     experience = None
 
     for line in contents.splitlines():
+
         if "document type:" in line.lower():
             doc_type_split = line.split("Document Type:")
-            doc_type = doc_type_split[1]
+            doc_type = doc_type_split[1].replace(" ", "")
             
         if "name" in line.lower():
             name_split = line.split("Name:")
-            name = name_split[1]
+            name = name_split[1].replace(" ", "")
         
         if "email" in line.lower():
             email_split = line.split("Email:")
-            email = email_split[1]
+            email = email_split[1].replace(" ", "")
 
         if "phone" in line.lower():
             phone_split = line.split("Phone:")
-            phone_no = phone_split[1]
+            phone_no = phone_split[1].replace(" ", "")
 
         if "experience" in line.lower():
             pass
 
+    for line in contents.splitlines():
+        iter = 0
         if "skills" in line.lower():
-            pass
+            print(line)
+            
 
 
 processed_dir = os.path.join(DIRECTORY, processed)
@@ -143,5 +153,6 @@ for file in os.listdir(DIRECTORY):
             
         
         if "resume" in contents.lower():
-            pass
+            lines = get_resume_data(contents)
+            print(lines)
 
