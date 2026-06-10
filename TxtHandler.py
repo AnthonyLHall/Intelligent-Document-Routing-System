@@ -3,7 +3,7 @@ import shutil
 
 # Processed File Directory
 
-DIRECTORY = r"C:\Users\antde\OneDrive\Desktop\Intelligent-Document-Routing"
+DIRECTORY = r"C:\Users\antde\OneDrive\Desktop\IntelligentSorting"
 processed = "Processed"
 
 
@@ -133,7 +133,7 @@ for file in os.listdir(DIRECTORY):
         try:
             read_file = open(file_dir, "r")
         except:
-            print("File/Folder is not Readable: " + file)
+            print("File/Folder is not Readable And/Or Isnt a txt file.: " + file)
 
         # read file
         contents = read_file.read()
@@ -165,6 +165,9 @@ for file in os.listdir(DIRECTORY):
             resume_field["email"] = email
             resume_field["phone_no"] = phone_no
             resume_field["skills"] = skills
-
-print(resume_field)
+        try:
+            read_file.close()
+            shutil.move(file_dir, processed_dir)
+        except Exception as e:
+            print(f"Move failed: {e}")
 
