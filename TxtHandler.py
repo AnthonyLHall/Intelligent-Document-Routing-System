@@ -85,7 +85,7 @@ def get_resume_data(content):
     skills = None
     experience = None
 
-    for line in contents.splitlines():
+    for line in content.splitlines():
 
         if "document type:" in line.lower():
             doc_type_split = line.split("Document Type:")
@@ -106,7 +106,7 @@ def get_resume_data(content):
         if "experience" in line.lower():
             pass
 
-    for index, line in enumerate(contents.splitlines()):
+    for index, line in enumerate(content.splitlines()):
         
         if "skills" in line.lower():
             lines.append(index)
@@ -114,60 +114,61 @@ def get_resume_data(content):
         elif "experience" in line.lower():
             lines.append(index)
 
-    all_lines = contents.splitlines()
+    all_lines = content.splitlines()
     skills = [s.strip() for s in all_lines[lines[0] + 1 : lines[1]] if s.strip()]
 
     return doc_type, name, email, phone_no, skills
 
-processed_dir = os.path.join(DIRECTORY, processed)
-if not os.path.exists(processed_dir):
-    os.makedirs(processed_dir)
+def process_files():
+    processed_dir = os.path.join(DIRECTORY, processed)
+    if not os.path.exists(processed_dir):
+        os.makedirs(processed_dir)
 
-for file in os.listdir(DIRECTORY):
-    if file != processed:
-        print("Current File: " + file)
-        # join file paths
-        file_dir = os.path.join(DIRECTORY, file)
+    for file in os.listdir(DIRECTORY):
+        if file != processed:
+            print("Current File: " + file)
+            # join file paths
+            file_dir = os.path.join(DIRECTORY, file)
 
-        #read file
-        try:
-            read_file = open(file_dir, "r")
-        except:
-            print("File/Folder is not Readable And/Or Isnt a txt file.: " + file)
+            #read file
+            try:
+                read_file = open(file_dir, "r")
+            except:
+                print("File/Folder is not Readable And/Or Isnt a txt file.: " + file)
 
-        # read file
-        contents = read_file.read()
-            
-        if "invoice" in contents.lower():
-            doc_type, vendor, invoice_num, date, amount, status = get_invoice_data(contents)
-            invoice_field["document_type"] = doc_type
-            invoice_field["vendor"] = vendor
-            invoice_field["invoice_number"] = invoice_num
-            invoice_field["date"] = date
-            invoice_field["amount"] = amount
-            invoice_field["status"] = status
-            
-        
-        if "contract" in contents.lower():
-            doc_type, contract_id, client, start_date, end_date, status = get_contract_data(contents)
-            contract_field["document_type"] = doc_type
-            contract_field["contract_id"] = contract_id
-            contract_field["client"] = client
-            contract_field["start_date"] = start_date
-            contract_field["end_date"] = end_date
-            contract_field["status"] = status
-        
-        
-        if "resume" in contents.lower():
-            doc_type, name, email, phone_no, skills = get_resume_data(contents)
-            resume_field["document_type"] = doc_type
-            resume_field["name"] = name
-            resume_field["email"] = email
-            resume_field["phone_no"] = phone_no
-            resume_field["skills"] = skills
-        try:
-            read_file.close()
-            shutil.move(file_dir, processed_dir)
-        except Exception as e:
-            print(f"Move failed: {e}")
+            # read file
+            contents = read_file.read()
+                
+            if "invoice" in contents.lower():
+                doc_type, vendor, invoice_num, date, amount, status = get_invoice_data(contents)
+                invoice_field["document_type"] = doc_type
+                invoice_field["vendor"] = vendor
+                invoice_field["invoice_number"] = invoice_num
+                invoice_field["date"] = date
+                invoice_field["amount"] = amount
+                invoice_field["status"] = status
+                           
+            if "contract" in contents.lower():
+                doc_type, contract_id, client, start_date, end_date, status = get_contract_data(contents)
+                contract_field["document_type"] = doc_type
+                contract_field["contract_id"] = contract_id
+                contract_field["client"] = client
+                contract_field["start_date"] = start_date
+                contract_field["end_date"] = end_date
+                contract_field["status"] = status
+                        
+            if "resume" in contents.lower():
+                doc_type, name, email, phone_no, skills = get_resume_data(contents)
+                resume_field["document_type"] = doc_type
+                resume_field["name"] = name
+                resume_field["email"] = email
+                resume_field["phone_no"] = phone_no
+                resume_field["skills"] = skills
+            try:
+                read_file.close()
+                shutil.move(file_dir, processed_dir)
+            except Exception as e:
+                print(f"Move failed: {e}")
 
+def field_data():
+    return invoice_field, resume_field, contract_field
