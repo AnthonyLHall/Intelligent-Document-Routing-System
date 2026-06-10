@@ -160,5 +160,11 @@ for file in os.listdir(DIRECTORY):
         
         if "resume" in contents.lower():
             doc_type, name, email, phone_no, skills = get_resume_data(contents)
-            print(skills)
+            resume_field["document_type"] = doc_type
+            resume_field["name"] = name
+            resume_field["email"] = email
+            resume_field["phone_no"] = phone_no
+            resume_field["skills"] = skills
+
+print(resume_field)
 
