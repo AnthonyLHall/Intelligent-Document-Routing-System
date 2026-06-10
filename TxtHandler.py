@@ -111,12 +111,13 @@ def get_resume_data(content):
         if "skills" in line.lower():
             lines.append(index)
             
-        if "experience" in line.lower():
+        elif "experience" in line.lower():
             lines.append(index)
 
     all_lines = contents.splitlines()
     skills = [s.strip() for s in all_lines[lines[0] + 1 : lines[1]] if s.strip()]
-    return skills
+
+    return doc_type, name, email, phone_no, skills
 
 processed_dir = os.path.join(DIRECTORY, processed)
 if not os.path.exists(processed_dir):
@@ -158,6 +159,6 @@ for file in os.listdir(DIRECTORY):
         
         
         if "resume" in contents.lower():
-            lines = get_resume_data(contents)
-            print(lines)
+            doc_type, name, email, phone_no, skills = get_resume_data(contents)
+            print(skills)
 
