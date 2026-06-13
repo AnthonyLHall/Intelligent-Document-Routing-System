@@ -11,6 +11,7 @@ invoice_field = {}
 resume_field = {}
 contract_field = {}
 
+# Extract data
 def get_invoice_data(content):
     vendor = None
     doc_type = None
@@ -130,7 +131,6 @@ def process_files():
             # join file paths
             file_dir = os.path.join(DIRECTORY, file)
 
-            #read file
             try:
                 read_file = open(file_dir, "r")
             except:
