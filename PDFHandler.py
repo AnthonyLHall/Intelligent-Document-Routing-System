@@ -9,6 +9,7 @@ for folder in os.listdir(directory):
     print(folder)
 
 
+
 """pages = convert_from_path("/Users/anthonyhall/.cache/kagglehub/datasets/hadikp/resume-data-pdf/versions/1/Resumes PDF/Accountant/0.pdf")
 
 text = ""
